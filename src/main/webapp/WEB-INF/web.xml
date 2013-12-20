@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        id="WebApp_ID" version="3.0">
+        
+	<display-name>Simple Student Web App</display-name>
+	<servlet>	
+		<servlet-name>show students</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.SampleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>show students</servlet-name>
+			<url-pattern>/allStudents</url-pattern>
+	</servlet-mapping>
+</web-app>
