@@ -15,10 +15,10 @@ import org.hibernate.annotations.Parameter;
 @Entity
 @Table(name="Grades")
 public class Grades {
-	
+
 	@Id	
 	@GenericGenerator(name="generator", strategy="foreign",
-	parameters = @Parameter(name="property", value="student"))
+	parameters = @Parameter(name="property", value="id"))
 	@GeneratedValue(generator="generator")
 	@Column(name="student_id")
 	private Long studentId;

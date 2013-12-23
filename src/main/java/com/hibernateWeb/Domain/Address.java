@@ -20,9 +20,6 @@ public class Address {
 	@Column(name="id", unique=true, nullable=false)
 	private Long id;
 	
-	@Column(name="area")
-	private String area;
-	
 	@Column(name="city")
 	private String city;
 	
@@ -36,9 +33,8 @@ public class Address {
 		
 	}
 	
-	public Address(String area, String city) {
+	public Address(String city) {
 		super();
-		this.area = area;
 		this.city = city;
 	}
 
@@ -48,14 +44,6 @@ public class Address {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
 	}
 
 	public String getCity() {

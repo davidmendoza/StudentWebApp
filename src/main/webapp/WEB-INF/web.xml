@@ -9,10 +9,26 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	<display-name>Simple Student Web App</display-name>
 	<servlet>	
 		<servlet-name>show students</servlet-name>
-		<servlet-class>com.hibernateWeb.Servlet.SampleServlet</servlet-class>
+		<servlet-class>com.hibernateWeb.Servlet.ViewAllStudentsServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 			<servlet-name>show students</servlet-name>
 			<url-pattern>/allStudents</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>add student</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.AddStudentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>add student</servlet-name>
+		<url-pattern>/addStudent</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>add student page controller</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.AddressListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>add student page controller</servlet-name>
+		<url-pattern>/addStudentPageController</url-pattern>
 	</servlet-mapping>
 </web-app>
