@@ -10,7 +10,7 @@
 	<h2>Student Profile Application</h2>
 	<a href="allStudents">View Students</a>
 	<br/>	
-	<a href="addStudentPageController">Add New Student</a>
+	<a href="addStudentPage">Add New Student</a>
 	<% String message = (String)request.getAttribute("message");
 	if( message != null){%>
 	<br/>

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,10 +24,10 @@ public class Address {
 	@Column(name="city")
 	private String city;
 	
-	@OneToMany(mappedBy="address")
+	@OneToMany(mappedBy="address", fetch=FetchType.LAZY)
 	private Set<Teacher> teachers = new HashSet();
 	
-	@OneToMany(mappedBy="address")
+	@OneToMany(mappedBy="address", fetch=FetchType.LAZY)
 	private Set<Student> students = new HashSet();
 	
 	public Address(){

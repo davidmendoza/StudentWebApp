@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Insert title here</title> 
 </head>
 <body>
 	<h3>Add New Student</h3>
@@ -14,20 +14,32 @@
 	<input type="radio" name="gender" value="Male" required>Male
 	<input type="radio" name="gender" value="Female" required>Female <br/>
 	Year Level: <select name="level" required>
+		<option disabled selected>Choose Year Level</option>
 		<option value="1">1st Year</option>
 		<option value="2">2nd Year</option>
 		<option value="3">3rd Year</option>
 		<option value="4">4th Year</option>
 	</select> <br/>
 	<%List<Address> cities = (List)request.getAttribute("cities");%> 
-	City: <select name="city">
-	
+	City: <select name="city" required">
+		<option selected value="0">Choose a City</option>
+	<%if (!cities.isEmpty()) { %>
 		<%for(Address add: cities){ %>
 			<option value="<%=add.getId()%>"><%=add.getCity()%> </option>
 		<%}%>
+	<%} %>
 	</select> <br/>
+	Your city is not in the list? Enter yours below:<br/> <input type="text" name="newCity"/> <br/>
 	<input type="submit" value="Add Student"/>
 	</form>
 	<a href="index.jsp"/>Back to Main Menu</a>
+	<% String message = (String)request.getAttribute("message");
+	if( message != null){%>
+	<br/>
+		<%=message %>
+	<% }%>
+	
 </body>
+
+
 </html>

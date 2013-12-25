@@ -17,9 +17,7 @@
 			<th>Gender</th>
 			<th>Level</th>
 			<th>Address</th>
-			<th>Math</th>
-			<th>Science</th>
-			<th>English</th>
+			
 		</tr>
 	<%for(Student st: result){
 		out.println("<tr>");
@@ -29,12 +27,11 @@
 		out.println("<td>"+st.getGender()+"</td>");
 		out.println("<td>"+st.getLevel()+"</td>");
 		out.println("<td>"+st.getAddress().getCity()+"</td>");
-		//out.println("<td>"+st.getGrade().getMath()+"</td>");
-		//out.println("<td>"+st.getGrade().getScience()+"</td>");
-		//out.println("<td>"+st.getGrade().getEnglish()+"</td>");
+		out.println("<td>"+"<a href=\"deleteStudent?id="+st.getId()+"\" onclick=return confirm(\"Delete this student?\")>Delete</a>");
 		out.println("</tr>");
 	} %>
 	</table>
 	<a href="index.jsp">Back to Main Menu</a>
+	
 </body>
 </html>

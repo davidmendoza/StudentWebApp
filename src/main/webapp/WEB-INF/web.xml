@@ -29,6 +29,14 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>add student page controller</servlet-name>
-		<url-pattern>/addStudentPageController</url-pattern>
+		<url-pattern>/addStudentPage</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>delete student</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.DeleteStudentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>delete student</servlet-name>
+		<url-pattern>/deleteStudent</url-pattern>
 	</servlet-mapping>
 </web-app>
