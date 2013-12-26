@@ -15,14 +15,14 @@ import com.hibernateWeb.Domain.Address;
 import com.hibernateWeb.Domain.Student;
 import com.hibernateWeb.Util.HibernateUtil;
 
-public class AddStudentServlet extends HttpServlet {
+public class UpdateStudentServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 		Address address;
+		Long id = Long.parseLong(request.getParameter("id"));
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String gender = request.getParameter("gender");
@@ -31,8 +31,9 @@ public class AddStudentServlet extends HttpServlet {
 		Long addressId = Long.parseLong(request.getParameter("city"));
 		RequestDispatcher rd;
 		Session session = null;
+		
 		if (addressId == 0 && newCity.trim() == ""){
-			request.setAttribute("message", "You have not entered an Address. Please fill up the form again");
+			request.setAttribute("message", "You have not entered an Address. Please edit the form again");
 			rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		} else {
@@ -46,14 +47,15 @@ public class AddStudentServlet extends HttpServlet {
 				} else {
 					address = (Address)session.get(Address.class, addressId);
 				}
-				Student student = new Student();
+				
+				Student student = (Student)session.get(Student.class, id);
 				student.setFirstName(firstName);
 				student.setLastName(lastName);
 				student.setGender(gender);
 				student.setLevel(level);
 				student.setAddress(address);
-				session.save(student);
-				request.setAttribute("message", "Successfully added "+student.getFirstName());
+				session.update(student);
+				request.setAttribute("message", "Successfully updated"+student.getFirstName());
 				
 			}  catch(HibernateException e) {
 				if (session!= null) { 

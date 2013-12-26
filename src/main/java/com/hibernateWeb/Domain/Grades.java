@@ -16,12 +16,10 @@ import org.hibernate.annotations.Parameter;
 @Table(name="Grades")
 public class Grades {
 
-	@Id	
-	@GenericGenerator(name="generator", strategy="foreign",
-	parameters = @Parameter(name="property", value="id"))
-	@GeneratedValue(generator="generator")
-	@Column(name="student_id")
-	private Long studentId;
+	
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id", unique=true, nullable=false)
+	private Long id;
 	
 	@Column(name="math")
 	private int math;
@@ -32,10 +30,10 @@ public class Grades {
 	@Column(name="english")
 	private int english;
 	
-	@OneToOne @PrimaryKeyJoinColumn
+	@OneToOne(mappedBy="grade")
 	private Student student;
 	
-	private Grades(){
+	public Grades(){
 		
 	}
 
@@ -45,13 +43,13 @@ public class Grades {
 		this.science = science;
 		this.english = english;
 	}
-
-	public Long getStudentId() {
-		return studentId;
+	
+	public Long getId() {
+		return id;
 	}
 
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int getMath() {

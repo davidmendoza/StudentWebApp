@@ -25,23 +25,28 @@ public class ViewAllStudentsServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException{
 		Session session = null;
-		RequestDispatcher rd;
-		
+		RequestDispatcher rd = null;
+		String mode = request.getParameter("mode");
 		try{
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
 			List<Student> result = session.createQuery("from Student").list();
 			if (!result.isEmpty()){
 				request.setAttribute("allStudents", result);
-				 rd = request.getRequestDispatcher("viewStudents.jsp");
+				if (mode.equals("grades")){ 
+					rd = request.getRequestDispatcher("viewGrades.jsp");
+				} else {
+					rd = request.getRequestDispatcher("viewStudents.jsp");
+				}
 			} else {
-				request.setAttribute("message", "There was an error in the database. Please try again. ");
+				request.setAttribute("message", "No students registered in the database. Please add a new student");
 				rd = request.getRequestDispatcher("index.jsp");
 			}
-			rd.forward(request, response);
+			//rd.forward(request, response);
 		} catch(HibernateException e) {
 			System.err.println("\tThere was an error in the database: "+e);
 		} finally {
+			rd.forward(request, response);
 			session.close();
 			
 		}

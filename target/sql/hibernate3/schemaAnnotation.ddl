@@ -1,11 +1,11 @@
 
-    alter table Grades 
-        drop 
-        foreign key FK7F9C279C893F1F8F;
-
     alter table Student 
         drop 
         foreign key FKF3371A1B425098EF;
+
+    alter table Student 
+        drop 
+        foreign key FKF3371A1BB00509E5;
 
     alter table Student_Teacher 
         drop 
@@ -36,11 +36,11 @@
     );
 
     create table Grades (
-        student_id bigint not null,
+        id bigint not null auto_increment unique,
         english integer,
         math integer,
         science integer,
-        primary key (student_id)
+        primary key (id)
     );
 
     create table Student (
@@ -50,6 +50,7 @@
         last_name varchar(255),
         level integer,
         address_id bigint,
+        grades_id bigint,
         primary key (id)
     );
 
@@ -68,17 +69,17 @@
         primary key (id)
     );
 
-    alter table Grades 
-        add index FK7F9C279C893F1F8F (student_id), 
-        add constraint FK7F9C279C893F1F8F 
-        foreign key (student_id) 
-        references Student (id);
-
     alter table Student 
         add index FKF3371A1B425098EF (address_id), 
         add constraint FKF3371A1B425098EF 
         foreign key (address_id) 
         references Address (id);
+
+    alter table Student 
+        add index FKF3371A1BB00509E5 (grades_id), 
+        add constraint FKF3371A1BB00509E5 
+        foreign key (grades_id) 
+        references Grades (id);
 
     alter table Student_Teacher 
         add index FKFCAED99E99DA6A2F (teacher_id), 

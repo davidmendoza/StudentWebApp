@@ -8,14 +8,14 @@
 </head>
 <body>
 	<h2>Student Profile Application</h2>
-	<a href="allStudents">View Students</a>
+	<a href="allStudents?mode=details">View Students</a>
 	<br/>	
-	<a href="addStudentPage">Add New Student</a>
-	<% String message = (String)request.getAttribute("message");
-	if( message != null){%>
+	<a href="allStudents?mode=grades">View Student Grades</a>
 	<br/>
-		<%=message %>
-	<% }%>
+	<a href="studentPage?mode=new">Add New Student</a>
+	<br/>
+	<b>${message }</b>
+	
 	
 	
 	

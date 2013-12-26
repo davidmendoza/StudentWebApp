@@ -36,7 +36,7 @@ public class Student {
 	@Column(name="level")
 	private int level;
 	
-	@OneToOne(mappedBy="student", cascade=CascadeType.ALL)
+	@OneToOne @JoinColumn(name="grades_id")
 	private Grades grade;
 	
 	@ManyToOne @JoinColumn(name="address_id")
