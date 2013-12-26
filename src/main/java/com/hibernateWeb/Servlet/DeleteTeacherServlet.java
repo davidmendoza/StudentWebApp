@@ -12,29 +12,35 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import com.hibernateWeb.Domain.Student;
+import com.hibernateWeb.Domain.Teacher;
 import com.hibernateWeb.Util.HibernateUtil;
 
-public class GradesServlet extends HttpServlet{
+public class DeleteTeacherServlet extends HttpServlet{
 	
+	private static final long serialVersionUID = 1L;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		Session session = null;
 		RequestDispatcher rd;
-		Long id = Long.parseLong(request.getParameter("id"));
 		try{
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
-			Student st = (Student)session.get(Student.class, id);
-			request.setAttribute("student", st);
-			rd = request.getRequestDispatcher("grades.jsp");
-			rd.forward(request, response);
-			
+			Long id = Long.parseLong(request.getParameter("id"));
+			Teacher teacher = (Teacher)session.get(Teacher.class, id);
+			session.delete(teacher);
 		} catch(HibernateException e) {
+			if (session!= null) { 
+				session.getTransaction().rollback();
+			}
 			System.err.println("\tThere was an error in the database: "+e);
 		} finally {
-			session.close();
-			
+			if (session!= null) { 
+				session.getTransaction().commit();
+			}
+			rd = request.getRequestDispatcher("viewTeachers");
+			rd.forward(request, response);
 		}
-		
 	}
-}	
+}
+

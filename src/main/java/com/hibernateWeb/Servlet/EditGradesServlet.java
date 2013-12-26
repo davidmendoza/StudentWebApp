@@ -34,10 +34,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			Student student = (Student)session.get(Student.class, id);
 			
 			Grades grade = student.getGrade();
-			List<Grades> grade1= new ArrayList<Grades>();
-			grade1.add(grade);
-			
-			if (grade1.isEmpty()){
+			if (grade == null){
 				Grades newGrade = new Grades();
 				newGrade.setEnglish(english);
 				newGrade.setMath(math);
@@ -60,7 +57,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			if (session!= null) { 
 				session.getTransaction().commit();
 			}
-			rd = request.getRequestDispatcher("index.jsp");
+			rd = request.getRequestDispatcher("allStudents?mode=grades");
 			rd.forward(request, response);
 		}
 		

@@ -18,7 +18,7 @@ import com.hibernateWeb.Domain.Address;
 import com.hibernateWeb.Domain.Student;
 import com.hibernateWeb.Util.HibernateUtil;
 
-public class AddressListServlet extends HttpServlet {
+public class LoadStudentServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
@@ -44,8 +44,6 @@ public class AddressListServlet extends HttpServlet {
 				titles.put("submit", "Add Student");
 				titles.put("url","addStudent");
 			}
-			
-		
 			
 			List<Address> cities = session.createQuery("from Address").list();
 			

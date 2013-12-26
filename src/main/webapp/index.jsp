@@ -14,6 +14,10 @@
 	<br/>
 	<a href="studentPage?mode=new">Add New Student</a>
 	<br/>
+	<a href="viewTeachers">View Teachers</a>
+	<br/>
+	<a href="teacherPage?mode=new">Add New Teacher</a>
+	<br/>
 	<b>${message }</b>
 	
 	

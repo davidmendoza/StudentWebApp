@@ -33,7 +33,7 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>student page controller</servlet-name>
-		<servlet-class>com.hibernateWeb.Servlet.AddressListServlet</servlet-class>
+		<servlet-class>com.hibernateWeb.Servlet.LoadStudentServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>student page controller</servlet-name>
@@ -54,5 +54,37 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	<servlet-mapping>
 		<servlet-name>edit grades controller</servlet-name>
 		<url-pattern>/gradesPage</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>teacher page controller</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.LoadTeacherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>teacher page controller</servlet-name>
+		<url-pattern>/teacherPage</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>add teacher controller</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.AddTeacherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>add teacher controller</servlet-name>
+		<url-pattern>/addTeacher</url-pattern>
+	</servlet-mapping>
+	<servlet>	
+		<servlet-name>show teachers</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.ViewAllTeachersServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>show teachers</servlet-name>
+			<url-pattern>/viewTeachers</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>delete teacher</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.DeleteTeacherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>delete teacher</servlet-name>
+		<url-pattern>/deleteTeacher</url-pattern>
 	</servlet-mapping>
 </web-app>
