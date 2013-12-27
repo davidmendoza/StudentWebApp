@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title> 
+<title>${titles.title}</title> 
 </head>
 <body>
 	<h3>${titles.title}</h3>

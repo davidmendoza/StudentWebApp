@@ -87,4 +87,20 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 		<servlet-name>delete teacher</servlet-name>
 		<url-pattern>/deleteTeacher</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>manage teachers and students</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.LoadStudentTeacherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>manage teachers and students</servlet-name>
+		<url-pattern>/manageStudentTeacher</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>add Student to Teacher</servlet-name>
+		<servlet-class>com.hibernateWeb.Servlet.AddStudentTeacherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>add Student to Teacher</servlet-name>
+		<url-pattern>/addStudentToTeacher</url-pattern>
+	</servlet-mapping>
 </web-app>

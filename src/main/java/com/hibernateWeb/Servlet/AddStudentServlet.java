@@ -20,8 +20,7 @@ public class AddStudentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+	
 		Address address;
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");

@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.metamodel.Type;
 
 @Entity
 @Table(name="Student")
@@ -36,7 +37,7 @@ public class Student {
 	@Column(name="level")
 	private int level;
 	
-	@OneToOne @JoinColumn(name="grades_id")
+	@OneToOne(cascade={CascadeType.ALL}) @JoinColumn(name="grades_id")
 	private Grades grade;
 	
 	@ManyToOne @JoinColumn(name="address_id")

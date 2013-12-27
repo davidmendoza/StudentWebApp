@@ -18,6 +18,7 @@
 			<th>Gender</th>
 			<th>Address</th>
 			<th>Delete Teacher</th>
+			<th>Manage Students</th>
 		</tr>
 	<c:forEach var="teacher" items="${allTeachers}">
 		<tr>
@@ -27,6 +28,7 @@
 			<td>${teacher.gender }
 			<td>${teacher.address.city }</td>
 			<td><a href="deleteTeacher?id=${teacher.id }">Delete</a></td>
+			<td><a href="manageStudentTeacher?id=${teacher.id }">Students</a></td>
 		</tr>
 	</c:forEach>
 	</table>
