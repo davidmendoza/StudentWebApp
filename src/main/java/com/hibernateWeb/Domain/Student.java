@@ -43,7 +43,7 @@ public class Student {
 	@ManyToOne @JoinColumn(name="address_id")
 	private Address address;
 	
-	@ManyToMany(cascade={CascadeType.ALL}) 
+	@ManyToMany//(cascade={CascadeType.ALL}) 
 	@JoinTable(name="Student_Teacher",
 	joinColumns={@JoinColumn(name="student_id")},
 	inverseJoinColumns={@JoinColumn(name="teacher_id")})

@@ -8,11 +8,11 @@
 </head>
 <body>
 	<h2>Student Profile Application</h2>
-	<a href="allStudents?mode=details">View Students</a>
+	<a href="students?mode=view">View Students</a>
 	<br/>	
 	<a href="allStudents?mode=grades">View Student Grades</a>
 	<br/>
-	<a href="studentPage?mode=new">Add New Student</a>
+	<a href="students?mode=new">Add New Student</a>
 	<br/>
 	<a href="viewTeachers">View Teachers</a>
 	<br/>

@@ -20,7 +20,6 @@
 			<th>Address</th>
 			<th>Delete Student</th>
 			<th>Update Details</th>
-			
 		</tr>
 	<c:forEach var="student" items="${allStudents}">
 		<tr>
@@ -30,8 +29,8 @@
 			<td>${student.gender }
 			<td>${student.level }</td>
 			<td>${student.address.city }</td>
-			<td><a href="deleteStudent?id=${student.id }">Delete</a></td>
-			<td><a href="studentPage?mode=update&id=${student.id }">Update</a></td>
+			<td><a href="students?mode=delete&id=${student.id }">Delete</a></td>
+			<td><a href="students?mode=update&id=${student.id }">Update</a></td>
 		</tr>
 	</c:forEach>
 	</table>
