@@ -8,24 +8,21 @@
 <title>Add/Edit Teacher</title> 
 </head>
 <body>
-	<h3>${titles.title}</h3>
-	<form action="${titles.url }" method="post">
+	<h3>Add New Teacher</h3>
+	<form action="teachers" method="post">
 	<input type="hidden" name="id" value=${teacher.id }></input>
-	First Name: <input type="text" name="firstName" required value=${teacher.firstName } ></input>  <br/>
-	Last Name: <input type="text" name="lastName" required value=${teacher.lastName } ></input><br/>
-	<input type="radio" name="gender" value="Male" required ${teacher.gender == 'Male' ? 'checked' : '' }>Male
-	<input type="radio" name="gender" value="Female" required ${teacher.gender == 'Female' ? 'checked' : '' }>Female <br/>
+	First Name: <input type="text" name="firstName" required/>  <br/>
+	Last Name: <input type="text" name="lastName" required /><br/>
+	<input type="radio" name="gender" value="Male" required>Male</input> <br/>
+	<input type="radio" name="gender" value="Female" required>Female</input> <br/>
 	City: <select name="city" required">
 		<option selected value="0">Choose a City</option>
-		<c:if test="${teacher.address.id > 0}">
-			<option ${teacher.address.id > '0' ? 'selected' : '' } value=${teacher.address.id }> ${teacher.address.city } </option>
-		</c:if> 
 	<c:forEach var="city" items="${cities}">
 		<option value="${city.id }">${city.city }</option>
 	</c:forEach>
 	</select> <br/>
 	Your city is not in the list? Enter yours below:<br/> <input type="text" name="newCity"/> <br/>
-	<input type="submit" value="${titles.submit}"/>
+	<input type="submit" value="Add Teacher"/>
 	</form>
 	<a href="index.jsp"/>Back to Main Menu</a>
 </body>

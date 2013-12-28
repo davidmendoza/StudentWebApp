@@ -15,6 +15,7 @@ import com.hibernateWeb.Domain.Address;
 import com.hibernateWeb.Domain.Student;
 import com.hibernateWeb.beans.StudentBean;
 import com.hibernateWeb.dao.AddressDAO;
+import com.hibernateWeb.dao.GradesDAO;
 import com.hibernateWeb.dao.StudentDAO;
 
 public class StudentController extends HttpServlet{
@@ -23,11 +24,15 @@ public class StudentController extends HttpServlet{
 	private static final String VIEW_STUDENTS = "view";
 	private static final String DELETE_STUDENT = "delete";
 	private static final String UPDATE_STUDENT = "update";
+	private static final String VIEW_GRADES = "grades";
+	private static final String SAVE_GRADES ="saveGrades";
 	private static final String ADD_STUDENT_URL = "addStudent.jsp;";
 	private static final String VIEW_STUDENTS_URL = "viewStudents.jsp";
+	private static final String VIEW_GRADES_URL = "viewGrades.jsp";
 	private static final String INDEX_URL = "index.jsp";
 	private static StudentDAO studentDao = new StudentDAO();
 	private static AddressDAO addressDao = new AddressDAO();
+	private static GradesDAO gradesDao = new GradesDAO();
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,21 +44,29 @@ public class StudentController extends HttpServlet{
 		sb.setFirstName(request.getParameter("firstName"));
 		sb.setLastName(request.getParameter("lastName"));
 		sb.setGender(request.getParameter("gender"));
-		sb.setNewCity(request.getParameter("newCity"));
 		sb.setLevel(Integer.parseInt(request.getParameter("level")));
-		sb.setAddressId(Long.parseLong(request.getParameter("city")));
+		String newCity = request.getParameter("newCity");
+		Long addressId = Long.parseLong(request.getParameter("city"));
 		
-		if (sb.getAddressId() == 0 && sb.getNewCity().trim() == ""){
-			request.setAttribute("message", "You have not entered an Address. Please fill up the form again");
-		} else {
-			if (id != null) {
+		if (addressId == 0 && newCity.trim() != ""){
+			
+			if (addressId == 0 || newCity.trim() != ""){
+				sb.setAddress(addressDao.addAddress(newCity));
+			} else {
+				sb.setAddress(addressDao.getAddress(addressId));
+			}
+			
+			if (id == 0){
 				studentDao.addStudent(sb);
-				request.setAttribute("message", "Successfully added "+sb.getFirstName());
+				request.setAttribute("message", "Successfully added Student "+sb.getFirstName());
 			} else {
 				sb.setId(id);
 				studentDao.updateStudent(sb);
-				request.setAttribute("message", "Successfully edited "+sb.getFirstName());
+				request.setAttribute("message", "Successfully updated Student "+sb.getFirstName());
 			}
+		
+		} else {
+			request.setAttribute("message", "You have not entered an Address. Please fill up the form again");
 		}
 		
 		view = request.getRequestDispatcher("index.jsp");
@@ -71,7 +84,6 @@ public class StudentController extends HttpServlet{
 		case NEW_STUDENT:
 			titles.put("title", "Add New Student");
 			titles.put("submit", "Add Student");
-			titles.put("url","addStudent");
 			List<Address> addCities = addressDao.getAddressList();
 			request.setAttribute("cities", addCities);
 			request.setAttribute("titles", titles);
@@ -98,7 +110,6 @@ public class StudentController extends HttpServlet{
 		case UPDATE_STUDENT:
 			titles.put("title", "Update Student Details");
 			titles.put("submit", "Update Student");
-			titles.put("url","updateStudent");
 			Long updateId = Long.parseLong(request.getParameter("id"));
 			Student student = studentDao.getStudent(updateId);
 			List<Address> updateCities = addressDao.getAddressList();
@@ -106,6 +117,33 @@ public class StudentController extends HttpServlet{
 			request.setAttribute("titles", titles);
 			request.setAttribute("student", student);
 			url = ADD_STUDENT_URL;
+		break;
+		
+		case VIEW_GRADES:
+			List<Student> studentList = studentDao.getStudentList();
+			if (!studentList.isEmpty()){
+				request.setAttribute("allStudents", studentList);
+				url = VIEW_GRADES_URL;
+			} else {
+				request.setAttribute("message", "No students registered in the database. Please add a new student");
+				url = INDEX_URL;
+			}
+		break;
+		
+		case SAVE_GRADES:
+			Long id = Long.parseLong(request.getParameter("id"));
+			try{
+				int math = Integer.parseInt(request.getParameter("math"));
+				int science = Integer.parseInt(request.getParameter("science"));
+				int english = Integer.parseInt(request.getParameter("english"));
+				
+				Student studentGrade = studentDao.getStudent(id);
+				gradesDao.saveGrades(studentGrade, math, english, science);
+				request.setAttribute("message", "Saved grade!");
+			} catch (Exception e) {
+				request.setAttribute("message", "Please enter a valid grade.");
+			}
+			url = "students?mode=grades";
 		break;
 		
 		default:

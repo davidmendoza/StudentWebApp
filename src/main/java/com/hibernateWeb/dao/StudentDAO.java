@@ -1,12 +1,10 @@
 package com.hibernateWeb.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import com.hibernateWeb.Domain.Address;
 import com.hibernateWeb.Domain.Student;
 import com.hibernateWeb.Util.HibernateUtil;
 import com.hibernateWeb.beans.StudentBean;
@@ -18,22 +16,15 @@ public class StudentDAO {
 	public void addStudent(StudentBean studentBean){
 		
 		try{
-			Address address;
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
 			
-			if (studentBean.getAddressId() == 0 || studentBean.getNewCity().trim() != ""){
-				address = new Address(studentBean.getNewCity());
-				session.save(address);
-			} else {
-				address = (Address)session.get(Address.class, studentBean.getAddressId());
-			}
 			Student student = new Student();
 			student.setFirstName(studentBean.getFirstName());
 			student.setLastName(studentBean.getLastName());
 			student.setGender(studentBean.getGender());
 			student.setLevel(studentBean.getLevel());
-			student.setAddress(address);
+			student.setAddress(studentBean.getAddress());
 			session.save(student);
 			
 		}  catch(HibernateException e) {
@@ -105,22 +96,15 @@ public class StudentDAO {
 	public void updateStudent(StudentBean studentBean){
 		
 		try{
-			Address address;
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
 			
-			if (studentBean.getAddressId() == 0 || studentBean.getNewCity().trim() != ""){
-				address = new Address(studentBean.getNewCity());
-				session.save(address);
-			} else {
-				address = (Address)session.get(Address.class, studentBean.getAddressId());
-			}
 			Student student = (Student)session.get(Student.class, studentBean.getId());
 			student.setFirstName(studentBean.getFirstName());
 			student.setLastName(studentBean.getLastName());
 			student.setGender(studentBean.getGender());
 			student.setLevel(studentBean.getLevel());
-			student.setAddress(address);
+			student.setAddress(studentBean.getAddress());
 			session.update(student);
 		} catch(HibernateException e) {
 			if (session!= null) { 
@@ -133,4 +117,6 @@ public class StudentDAO {
 			}
 		}
 	}
+	
+	
 }

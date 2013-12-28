@@ -10,7 +10,8 @@
 <body>
 	<h3>Manage Students of ${teacher.lastName }, ${teacher.firstName }</h3>
 	Select a student/s from the list:
-	<form action="addStudentToTeacher" method="post">
+	<form action="teachers">
+		<input type="hidden" name="mode" value="addStudentTeacher"/>
 		<table border="1">
 			<tr>
 				<th></th>
@@ -44,7 +45,7 @@
 			<td>${student.lastName }</td>
 			<td>${student.firstName }</td>
 			<td>${student.level }</td>
-			<td><a href="removeStudentFromTeacher?sId=${student.id }&tId=${teacher.id }">Remove</a></td>
+			<td><a href="teachers?mode=removeStudent&sId=${student.id }&tId=${teacher.id }">Remove</a></td>
 		</tr>
 		</c:forEach>
 	</table>

@@ -23,8 +23,9 @@
 		</tr>
 		
 	<c:forEach var="student" items="${allStudents}">
-		<form action="gradesPage?id=${student.id }">
+		<form action="students">
 		<tr>
+			<input type="hidden" name="mode" value="saveGrades"/>
 			<td>${student.id }<input type="hidden" value="${student.id }" name="id"/></td>
 			<td>${student.firstName }</td>
 			<td>${student.lastName }</td>
@@ -39,5 +40,6 @@
 		
 	</table>
 	<a href="index.jsp">Back to Main Menu</a>
+	<b>${message }</b>
 </body>
 </html>

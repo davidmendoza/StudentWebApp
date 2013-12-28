@@ -27,8 +27,8 @@
 			<td>${teacher.lastName }</td>
 			<td>${teacher.gender }
 			<td>${teacher.address.city }</td>
-			<td><a href="deleteTeacher?id=${teacher.id }">Delete</a></td>
-			<td><a href="manageStudentTeacher?id=${teacher.id }">Students</a></td>
+			<td><a href="teachers?mode=delete&id=${teacher.id }">Delete</a></td>
+			<td><a href="teachers?mode=manageStudents&id=${teacher.id }">Students</a></td>
 		</tr>
 	</c:forEach>
 	</table>

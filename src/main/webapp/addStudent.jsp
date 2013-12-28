@@ -9,10 +9,17 @@
 </head>
 <body>
 	<h3>${titles.title}</h3>
-	<form action="${titles.url }" method="post">
-	<input type="hidden" name="id" value=${student.id }></input>
-	First Name: <input type="text" name="firstName" required value=${student.firstName } ></input>  <br/>
-	Last Name: <input type="text" name="lastName" required value=${student.lastName } ></input><br/>
+	<form action="students" method="post">
+	<c:choose>
+		<c:when test="${student.id != null }">
+			<input type="hidden" name="id" value="${student.id }"/>
+		</c:when>
+		<c:otherwise>
+			<input type="hidden" name="id" value="0"/>
+		</c:otherwise>
+	</c:choose>
+	First Name: <input type="text" name="firstName" required value="${student.firstName }" />  <br/>
+	Last Name: <input type="text" name="lastName" required value="${student.lastName }" /><br/>
 	<input type="radio" name="gender" value="Male" required ${student.gender == 'Male' ? 'checked' : '' }>Male
 	<input type="radio" name="gender" value="Female" required ${student.gender == 'Female' ? 'checked' : '' }>Female <br/>
 	Year Level: <select name="level" required>

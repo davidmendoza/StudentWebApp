@@ -17,6 +17,15 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 			<url-pattern>/students</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>	
+		<servlet-name>Teacher Controller</servlet-name>
+		<servlet-class>com.hibernateWeb.controller.TeacherController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+			<servlet-name>Teacher Controller</servlet-name>
+			<url-pattern>/teachers</url-pattern>
+	</servlet-mapping>
+	
 	
 	<servlet>	
 		<servlet-name>show students</servlet-name>

@@ -10,13 +10,13 @@
 	<h2>Student Profile Application</h2>
 	<a href="students?mode=view">View Students</a>
 	<br/>	
-	<a href="allStudents?mode=grades">View Student Grades</a>
+	<a href="students?mode=grades">View Student Grades</a>
 	<br/>
 	<a href="students?mode=new">Add New Student</a>
 	<br/>
-	<a href="viewTeachers">View Teachers</a>
+	<a href="teachers?mode=view">View Teachers</a>
 	<br/>
-	<a href="teacherPage?mode=new">Add New Teacher</a>
+	<a href="teachers?mode=new">Add New Teacher</a>
 	<br/>
 	<b>${message }</b>
 	
