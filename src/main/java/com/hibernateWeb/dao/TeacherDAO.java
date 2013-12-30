@@ -68,6 +68,10 @@ Session session = null;
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
 			Teacher teacher = (Teacher)session.get(Teacher.class, id);
+			String sql = "Delete from Student_Teacher where teacher_id = :id";
+			Query query = session.createSQLQuery(sql);
+			query.setParameter("id", id);
+			query.executeUpdate();
 			session.delete(teacher);
 		} catch(HibernateException e) {
 			if (session!= null) { 

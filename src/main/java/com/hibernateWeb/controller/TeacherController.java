@@ -37,29 +37,35 @@ public class TeacherController extends HttpServlet{
 		TeacherBean tb = new TeacherBean();
 		RequestDispatcher view;
 		
-		tb.setFirstName(request.getParameter("firstName"));
-		tb.setLastName(request.getParameter("lastName"));
-		tb.setGender(request.getParameter("gender"));
-		String newCity = request.getParameter("newCity");
-		Long addressId = Long.parseLong(request.getParameter("city"));
-		
-		if (addressId == 0 && newCity.trim() != "") {
+		try {
+			tb.setFirstName(request.getParameter("firstName"));
+			tb.setLastName(request.getParameter("lastName"));
+			tb.setGender(request.getParameter("gender"));
+			String newCity = request.getParameter("newCity");
+			Long addressId = Long.parseLong(request.getParameter("city"));
 			
-			if (addressId == 0 || newCity.trim() != ""){
-				tb.setAddress(addressDao.addAddress(newCity));
+			if (addressId == 0 && newCity.trim() == "") {
+				
+				request.setAttribute("message", "You have not entered an Address. Please fill up the form again");
+				
 			} else {
-				tb.setAddress(addressDao.getAddress(addressId));
+				if (addressId == 0 || newCity.trim() != ""){
+					tb.setAddress(addressDao.addAddress(newCity));
+				} else {
+					tb.setAddress(addressDao.getAddress(addressId));
+				}
+				
+				teacherDao.addTeacher(tb);
+				request.setAttribute("message", "Successfully added Teacher "+tb.getFirstName());
 			}
 			
-			teacherDao.addTeacher(tb);
-			request.setAttribute("message", "Successfully added Teacher "+tb.getFirstName());
-			
-		} else {
-			request.setAttribute("message", "You have not entered an Address. Please fill up the form again");
+		} catch(Exception e){
+			System.out.println("error "+ e);
+			request.setAttribute("message", "There was a problem in the system. Please try again.");
+		} finally {
+			view = request.getRequestDispatcher("index.jsp");
+			view.forward(request, response);
 		}
-		
-		view = request.getRequestDispatcher("index.jsp");
-		view.forward(request, response);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -68,74 +74,79 @@ public class TeacherController extends HttpServlet{
 		String mode = request.getParameter("mode");
 		String url = null;
 		
-		switch(mode){
-		
-		case NEW_TEACHER:
-			List<Address> addCities = addressDao.getAddressList();
-			request.setAttribute("cities", addCities);
-			url = ADD_TEACHER_URL;
-		break;
-		
-		case VIEW_TEACHERS:
-			List<Teacher> teachers = teacherDao.getTeacherList();
-			if (!teachers.isEmpty()){
-				request.setAttribute("allTeachers", teachers);
-				url = VIEW_TEACHERS_URL;
-			} else {
-				request.setAttribute("message", "No teachers registered in the database. Please add a new teacher");
+		try {
+			switch(mode){
+			
+			case NEW_TEACHER:
+				List<Address> addCities = addressDao.getAddressList();
+				request.setAttribute("cities", addCities);
+				url = ADD_TEACHER_URL;
+			break;
+			
+			case VIEW_TEACHERS:
+				List<Teacher> teachers = teacherDao.getTeacherList();
+				if (!teachers.isEmpty()){
+					request.setAttribute("allTeachers", teachers);
+					url = VIEW_TEACHERS_URL;
+				} else {
+					request.setAttribute("message", "No teachers registered in the database. Please add a new teacher");
+					url = INDEX_URL;
+				}
+			break;
+			
+			case DELETE_TEACHER:
+				Long deleteId = Long.parseLong(request.getParameter("id"));
+				teacherDao.deleteTeacher(deleteId);
+				url = "teachers?mode=view";
+			break;
+			
+			case MANAGE_STUDENTS:
+				Long id = Long.parseLong(request.getParameter("id"));
+				Teacher teacher = teacherDao.getTeacher(id);	
+				
+				Map<String, List<Student>> studentMap = teacherDao.getStudentMap(id);
+				
+				if (!studentMap.get("allStudents").isEmpty()){
+					request.setAttribute("myStudents", studentMap.get("myStudents"));
+					request.setAttribute("teacher", teacher);
+					request.setAttribute("notMyStudents", studentMap.get("notMyStudents"));
+					url = MANAGE_STUDENT_TEACHER_URL;
+				} else {
+					request.setAttribute("message", "No students registered in the database. Please add a new student");
+					url = INDEX_URL;
+				}
+			break;
+			
+			case ADD_STUDENT_TO_TEACHER:
+				String studentIds[] = request.getParameterValues("studentId");
+				Long teacherId = Long.parseLong(request.getParameter("teacherId"));
+				
+				if (studentIds != null) {
+					teacherDao.addStudentToTeacher(teacherId, studentIds);
+					request.setAttribute("message", "You have added new Students!");
+				} else {
+					request.setAttribute("message", "You have not selected any student");
+				}
 				url = INDEX_URL;
-			}
-		break;
-		
-		case DELETE_TEACHER:
-			Long deleteId = Long.parseLong(request.getParameter("id"));
-			teacherDao.deleteTeacher(deleteId);
-			url = "teachers?mode=view";
-		break;
-		
-		case MANAGE_STUDENTS:
-			Long id = Long.parseLong(request.getParameter("id"));
-			Teacher teacher = teacherDao.getTeacher(id);	
+			break;
 			
-			Map<String, List<Student>> studentMap = teacherDao.getStudentMap(id);
+			case REMOVE_STUDENT_FROM_TEACHER:
+				Long teacherId1 = Long.parseLong(request.getParameter("tId"));
+				Long studentId = Long.parseLong(request.getParameter("sId"));
+				teacherDao.removeStudent(teacherId1, studentId);
+				url = ("teachers?mode=manageStudents&id="+teacherId1);
+			break;
 			
-			if (!studentMap.get("allStudents").isEmpty()){
-				request.setAttribute("myStudents", studentMap.get("myStudents"));
-				request.setAttribute("teacher", teacher);
-				request.setAttribute("notMyStudents", studentMap.get("notMyStudents"));
-				url = MANAGE_STUDENT_TEACHER_URL;
-			} else {
-				request.setAttribute("message", "No students registered in the database. Please add a new student");
+			default:
 				url = INDEX_URL;
-			}
-		break;
-		
-		case ADD_STUDENT_TO_TEACHER:
-			String studentIds[] = request.getParameterValues("studentId");
-			Long teacherId = Long.parseLong(request.getParameter("teacherId"));
+			break;
 			
-			if (studentIds != null) {
-				teacherDao.addStudentToTeacher(teacherId, studentIds);
-				request.setAttribute("message", "You have added new Students!");
-			} else {
-				request.setAttribute("message", "You have not selected any student");
 			}
+		} catch(Exception e) {
+			System.out.println("error "+e);
+			request.setAttribute("message", "There was a problem with the system. Please try again.");
 			url = INDEX_URL;
-		break;
-		
-		case REMOVE_STUDENT_FROM_TEACHER:
-			Long teacherId1 = Long.parseLong(request.getParameter("tId"));
-			Long studentId = Long.parseLong(request.getParameter("sId"));
-			teacherDao.removeStudent(teacherId1, studentId);
-			url = ("teachers?mode=manageStudents&id="+teacherId1);
-		break;
-		
-		default:
-			url = INDEX_URL;
-		break;
-		
 		}
-		
 		view = request.getRequestDispatcher(url);
 		view.forward(request, response);
 	}

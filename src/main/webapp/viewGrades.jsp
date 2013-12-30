@@ -39,7 +39,7 @@
 	</c:forEach>
 		
 	</table>
-	<a href="index.jsp">Back to Main Menu</a>
+	<a href="index.jsp">Back to Main Menu</a><br/>
 	<b>${message }</b>
 </body>
 </html>
