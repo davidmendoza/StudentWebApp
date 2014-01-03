@@ -1,7 +1,5 @@
 package com.hibernateWeb.beans;
 
-import com.hibernateWeb.Domain.Address;
-
 public class TeacherBean {
 	
 	public TeacherBean(){
@@ -12,8 +10,6 @@ public class TeacherBean {
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private int level;
-	private Address address;
 	
 	public Long getId() {
 		return id;
@@ -39,16 +35,5 @@ public class TeacherBean {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public int getLevel() {
-		return level;
-	}
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+	
 }

@@ -3,6 +3,7 @@ package com.hibernateWeb.Domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Teacher {
 	@Column(name="gender")
 	private String gender;
 	
-	@ManyToOne @JoinColumn(name="address_id")
+	@ManyToOne(cascade={CascadeType.PERSIST}) @JoinColumn(name="address_id")
 	private Address address;
 	
 	@ManyToMany(mappedBy="teachers")

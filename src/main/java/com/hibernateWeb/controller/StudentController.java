@@ -59,26 +59,19 @@ public class StudentController extends HttpServlet{
 			sb.setLastName(request.getParameter("lastName"));
 			sb.setGender(request.getParameter("gender"));
 			sb.setLevel(Integer.parseInt(request.getParameter("level")));
-			String newCity = request.getParameter("newCity");
+			String newCity = request.getParameter("newCity").trim();
 			Long addressId = Long.parseLong(request.getParameter("city"));
 			
-			if (addressId == 0 && newCity.trim() == ""){
-				
+			if (addressId == 0 && newCity == ""){
 				request.setAttribute("message", "You have not entered an Address. Please fill up the form again");
 			} else {
 				
-				if (addressId == 0 || newCity.trim() != ""){
-					sb.setAddress(addressDao.addAddress(newCity));
-				} else {
-					sb.setAddress(addressDao.getAddress(addressId));
-				}
-				
 				if (id == 0){
-					studentDao.addStudent(sb);
+					studentDao.addStudent(sb, addressId, newCity);
 					request.setAttribute("message", "Successfully added Student "+sb.getFirstName());
 				} else {
 					sb.setId(id);
-					studentDao.updateStudent(sb);
+					studentDao.updateStudent(sb, addressId, newCity);
 					request.setAttribute("message", "Successfully updated Student "+sb.getFirstName());
 				}
 			}
@@ -157,9 +150,7 @@ public class StudentController extends HttpServlet{
 					int math = Integer.parseInt(request.getParameter("math"));
 					int science = Integer.parseInt(request.getParameter("science"));
 					int english = Integer.parseInt(request.getParameter("english"));
-					
-					Student studentGrade = studentDao.getStudent(id);
-					gradesDao.saveGrades(studentGrade, math, english, science);
+					gradesDao.saveGrades(id, math, english, science);
 					request.setAttribute("message", "Saved grade!");
 				} catch (Exception e) {
 					request.setAttribute("message", "Please enter a valid grade.");

@@ -11,12 +11,14 @@ public class GradesDAO {
 	
 	Session session = null;
 	
-	public void saveGrades(Student student, int math, int english, int science){
+	public void saveGrades(Long id, int math, int english, int science){
 		
 		try{
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
 			
+			Student student = (Student) session.get(Student.class, id);
+					
 			Grades grade = student.getGrade();
 			if (grade == null){
 				Grades newGrade = new Grades();

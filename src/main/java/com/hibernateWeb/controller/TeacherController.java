@@ -55,21 +55,13 @@ public class TeacherController extends HttpServlet{
 			tb.setFirstName(request.getParameter("firstName"));
 			tb.setLastName(request.getParameter("lastName"));
 			tb.setGender(request.getParameter("gender"));
-			String newCity = request.getParameter("newCity");
+			String newCity = request.getParameter("newCity").trim();
 			Long addressId = Long.parseLong(request.getParameter("city"));
 			
-			if (addressId == 0 && newCity.trim() == "") {
-				
+			if (addressId == 0 && newCity == "") {
 				request.setAttribute("message", "You have not entered an Address. Please fill up the form again");
-				
-			} else {
-				if (addressId == 0 || newCity.trim() != ""){
-					tb.setAddress(addressDao.addAddress(newCity));
-				} else {
-					tb.setAddress(addressDao.getAddress(addressId));
-				}
-				
-				teacherDao.addTeacher(tb);
+			} else {				
+				teacherDao.addTeacher(tb, addressId, newCity);
 				request.setAttribute("message", "Successfully added Teacher "+tb.getFirstName());
 			}
 			

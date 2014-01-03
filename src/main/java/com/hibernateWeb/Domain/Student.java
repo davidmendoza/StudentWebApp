@@ -40,10 +40,10 @@ public class Student {
 	@OneToOne(cascade={CascadeType.ALL}) @JoinColumn(name="grades_id")
 	private Grades grade;
 	
-	@ManyToOne @JoinColumn(name="address_id")
+	@ManyToOne(cascade={CascadeType.PERSIST}) @JoinColumn(name="address_id")
 	private Address address;
 	
-	@ManyToMany//(cascade={CascadeType.ALL}) 
+	@ManyToMany
 	@JoinTable(name="Student_Teacher",
 	joinColumns={@JoinColumn(name="student_id")},
 	inverseJoinColumns={@JoinColumn(name="teacher_id")})

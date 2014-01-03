@@ -13,8 +13,6 @@ public class StudentBean {
 	private String lastName;
 	private String gender;
 	private int level;
-	private Long addressId;
-	private Address address;
 	
 	public Long getId() {
 		return id;
@@ -45,18 +43,6 @@ public class StudentBean {
 	}
 	public void setLevel(int level) {
 		this.level = level;
-	}
-	public Long getAddressId() {
-		return addressId;
-	}
-	public void setAddressId(Long addressId) {
-		this.addressId = addressId;
-	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
 	}
 	
 }

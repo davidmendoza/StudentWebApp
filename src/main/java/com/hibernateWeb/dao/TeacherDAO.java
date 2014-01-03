@@ -9,8 +9,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.hibernateWeb.Domain.Address;
 import com.hibernateWeb.Domain.Student;
-import com.hibernateWeb.Domain.Teacher;
 import com.hibernateWeb.Domain.Teacher;
 import com.hibernateWeb.Util.HibernateUtil;
 import com.hibernateWeb.beans.TeacherBean;
@@ -19,18 +19,25 @@ public class TeacherDAO {
 
 Session session = null;
 	
-	public void addTeacher(TeacherBean teacherBean){
+	public void addTeacher(TeacherBean teacherBean, Long addressId, String newCity){
 		
 		try{
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
-		
+			
+			Address address = null;
+			if (addressId == 0 || newCity != ""){
+				address = new Address(newCity);
+			} else {
+				address = (Address) session.get(Address.class, addressId);
+			}
+			
 			Teacher teacher = new Teacher();
 			teacher.setFirstName(teacherBean.getFirstName());
 			teacher.setLastName(teacherBean.getLastName());
 			teacher.setGender(teacherBean.getGender());
-			teacher.setAddress(teacherBean.getAddress());
-			session.save(teacher);
+			teacher.setAddress(address);
+			session.persist(teacher);
 			
 		}  catch(HibernateException e) {
 			if (session!= null) { 
