@@ -1,6 +1,7 @@
 package com.hibernateWeb.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +21,13 @@ import com.hibernateWeb.dao.StudentDAO;
 
 public class StudentController extends HttpServlet{
 	
-	private static final String NEW_STUDENT = "new";
-	private static final String VIEW_STUDENTS = "view";
-	private static final String DELETE_STUDENT = "delete";
-	private static final String UPDATE_STUDENT = "update";
-	private static final String VIEW_GRADES = "grades";
-	private static final String SAVE_GRADES ="saveGrades";
+	private static final Map<String, Integer> OPTIONS = createOptions();
+	private static final int NEW_STUDENT = 1;
+	private static final int VIEW_STUDENTS = 2;
+	private static final int DELETE_STUDENT = 3;
+	private static final int UPDATE_STUDENT = 4;
+	private static final int VIEW_GRADES = 5;
+	private static final int SAVE_GRADES = 6;
 	private static final String ADD_STUDENT_URL = "addStudent.jsp;";
 	private static final String VIEW_STUDENTS_URL = "viewStudents.jsp";
 	private static final String VIEW_GRADES_URL = "viewGrades.jsp";
@@ -33,6 +35,17 @@ public class StudentController extends HttpServlet{
 	private static StudentDAO studentDao = new StudentDAO();
 	private static AddressDAO addressDao = new AddressDAO();
 	private static GradesDAO gradesDao = new GradesDAO();
+	
+	private static Map<String, Integer> createOptions(){
+		Map<String, Integer> options = new HashMap<String, Integer>();
+		options.put("new", 1);
+		options.put("view", 2);
+		options.put("delete", 3);
+		options.put("update", 4);
+		options.put("grades", 5);
+		options.put("saveGrades", 6);
+		return Collections.unmodifiableMap(options);
+	}
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -82,8 +95,9 @@ public class StudentController extends HttpServlet{
 		
 		RequestDispatcher view;
 		Map<String, String> titles = new HashMap<String, String>();
-		String mode = request.getParameter("mode");
+		String option = request.getParameter("mode");
 		String url = null;
+		int mode = OPTIONS.get(option);
 		
 		try {
 			switch(mode){

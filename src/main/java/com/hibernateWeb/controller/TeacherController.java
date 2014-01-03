@@ -1,6 +1,8 @@
 package com.hibernateWeb.controller;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,18 +21,30 @@ import com.hibernateWeb.dao.TeacherDAO;
 
 public class TeacherController extends HttpServlet{
 	
-	private static final String NEW_TEACHER = "new";
-	private static final String VIEW_TEACHERS = "view";
-	private static final String DELETE_TEACHER = "delete";
-	private static final String MANAGE_STUDENTS = "manageStudents";
-	private static final String ADD_STUDENT_TO_TEACHER = "addStudentTeacher";
-	private static final String REMOVE_STUDENT_FROM_TEACHER = "removeStudent";
+	private static final Map<String, Integer> OPTIONS = createOptions();
+	private static final int NEW_TEACHER = 1;
+	private static final int VIEW_TEACHERS = 2;
+	private static final int DELETE_TEACHER = 3;
+	private static final int MANAGE_STUDENTS = 4;
+	private static final int ADD_STUDENT_TO_TEACHER = 5;
+	private static final int REMOVE_STUDENT_FROM_TEACHER = 6;
 	private static final String MANAGE_STUDENT_TEACHER_URL = "manageStudentTeacher.jsp";
 	private static final String VIEW_TEACHERS_URL = "viewTeachers.jsp";
 	private static final String ADD_TEACHER_URL = "addTeacher.jsp;";
 	private static final String INDEX_URL = "index.jsp";
 	private static AddressDAO addressDao = new AddressDAO();
 	private static TeacherDAO teacherDao = new TeacherDAO();
+	
+	private static Map<String, Integer> createOptions(){
+		Map<String, Integer> options = new HashMap<String, Integer>();
+		options.put("new", 1);
+		options.put("view", 2);
+		options.put("delete", 3);
+		options.put("manageStudents", 4);
+		options.put("addStudentTeacher", 5);
+		options.put("removeStudent", 6);
+		return Collections.unmodifiableMap(options);
+	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -71,9 +85,9 @@ public class TeacherController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		RequestDispatcher view;
-		String mode = request.getParameter("mode");
+		String option = request.getParameter("mode");
 		String url = null;
-		
+		int mode = OPTIONS.get(option);
 		try {
 			switch(mode){
 			
