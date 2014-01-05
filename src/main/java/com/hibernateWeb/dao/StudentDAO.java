@@ -17,7 +17,7 @@ public class StudentDAO {
 	public void addStudent(StudentBean studentBean, Long addressId, String newCity){
 		
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			
 			Address address = null;
@@ -42,6 +42,7 @@ public class StudentDAO {
 			System.err.println("\tThere was an error in the database: "+e);
 		} finally {
 			if (session!= null) { 
+				session.getTransaction().commit();
 				session.close();
 			}
 		}
@@ -68,7 +69,7 @@ public class StudentDAO {
 	public void deleteStudent(Long id){
 		
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			Student st = (Student)session.get(Student.class, id);
 			session.delete(st);
@@ -79,6 +80,7 @@ public class StudentDAO {
 			System.err.println("\tThere was an error in the database: "+e);
 		} finally {
 			if (session!= null) { 
+				session.getTransaction().commit();
 				session.close();
 			}
 		}
@@ -104,7 +106,7 @@ public class StudentDAO {
 	public void updateStudent(StudentBean studentBean, Long addressId, String newCity){
 		
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			Address address = null;
 			Student student = (Student)session.get(Student.class, studentBean.getId());
@@ -129,6 +131,7 @@ public class StudentDAO {
 			System.err.println("\tThere was an error in the database: "+e);
 		} finally {
 			if (session!= null) { 
+				session.getTransaction().commit();
 				session.close();
 			}
 		}

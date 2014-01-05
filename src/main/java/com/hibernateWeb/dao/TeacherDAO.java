@@ -22,7 +22,7 @@ Session session = null;
 	public void addTeacher(TeacherBean teacherBean, Long addressId, String newCity){
 		
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			
 			Address address = null;
@@ -47,6 +47,7 @@ Session session = null;
 		} finally {
 			if (session!= null) { 
 				session.getTransaction().commit();
+				session.close();
 			}
 		}
 	}
@@ -72,7 +73,7 @@ Session session = null;
 	public void deleteTeacher(Long id){
 		
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			Teacher teacher = (Teacher)session.get(Teacher.class, id);
 			String sql = "Delete from Student_Teacher where teacher_id = :id";
@@ -88,6 +89,7 @@ Session session = null;
 		} finally {
 			if (session!= null) { 
 				session.getTransaction().commit();
+				session.close();
 			}
 		}
 	}
@@ -138,7 +140,7 @@ Session session = null;
 	public void addStudentToTeacher(Long teacherId, String[] studentIds){
 		
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			Teacher teacher = (Teacher)session.get(Teacher.class, teacherId);
 			
@@ -156,13 +158,14 @@ Session session = null;
 		} finally {
 			if (session!= null) { 
 				session.getTransaction().commit();
+				session.close();
 			}
 		}
 	}
 	
 	public void removeStudent(Long teacherId, Long studentId){
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			Teacher teacher = (Teacher)session.get(Teacher.class, teacherId);
 			Student student = (Student)session.get(Student.class, studentId);
@@ -176,6 +179,7 @@ Session session = null;
 		} finally {
 			if (session!= null) { 
 				session.getTransaction().commit();
+				session.close();
 			}
 		}
 	}

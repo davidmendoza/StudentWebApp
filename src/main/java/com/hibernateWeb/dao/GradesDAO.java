@@ -14,7 +14,7 @@ public class GradesDAO {
 	public void saveGrades(Long id, int math, int english, int science){
 		
 		try{
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 			
 			Student student = (Student) session.get(Student.class, id);
@@ -43,6 +43,7 @@ public class GradesDAO {
 		} finally {
 			if (session!= null) { 
 				session.getTransaction().commit();
+				session.close();
 			}
 		}
 	}
